@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-ALLOWED_HOSTS = ['myaibot.herokuapp.com']
+ALLOWED_HOSTS = ['myaibot.onrender.com']
 
 
 # Internationalization
