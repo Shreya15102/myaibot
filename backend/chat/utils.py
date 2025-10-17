@@ -76,9 +76,10 @@ def parse_query(query):
             break
 
     # Budget extraction
-    budget_match = re.search(r'(?:under|below|less than|upto)\s*₹?\s*([\d.,kKlL]+)', query)
-    if budget_match:
-        result['budget'] = budget_match.group(1).replace('.', '').strip()
+    budget = None
+    if re.search(r"(under|below|less than|upto|around|near)\s*\d+", query) or re.search(r"\d+k|\d{5,6}", query):
+        budget = normalize_price(query)
+        result['budget'] = budget
 
     # Feature extraction
     if 'camera' in query:
@@ -95,25 +96,16 @@ def parse_query(query):
     return result
 
 
-def normalize_price(value):
+def normalize_price(text):
     """Convert price strings like '₹30,000', '25k', '1.5L' to integer."""
-    if not value:
+    text = text.lower().replace(",", "").replace("₹", "")
+    match = re.search(r"(\d+)(k)?", text)
+    if not match:
         return None
-    if isinstance(value, (int, float)):
-        return int(value)
-    
-    s = str(value).lower().replace('₹', '').replace(',', '').strip()
-    multiplier = 1
-    if 'k' in s:
-        multiplier = 1000
-        s = s.replace('k', '')
-    elif 'l' in s:  # lakh
-        multiplier = 100000
-        s = s.replace('l', '')
-    try:
-        return int(float(s) * multiplier)
-    except ValueError:
-        return None
+    amount = int(match.group(1))
+    if match.group(2):  # 'k' suffix
+        amount *= 1000
+    return amount
 
 
 def get_gemini_explanation(query):

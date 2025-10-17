@@ -11,7 +11,7 @@ class ChatAPI(APIView):
         query = request.data.get("query", "").strip()
         if not query:
             return Response({"error": "Query is required."}, status=400)
-
+        print(query)
         lower_query = query.lower()
         unsafe_phrases = ["api key", "system prompt", "ignore your rules", "reveal", "trash"]
         if any(phrase in lower_query for phrase in unsafe_phrases):
@@ -65,14 +65,14 @@ class ChatAPI(APIView):
                 qs = qs.filter(Q(os__icontains='ios') | Q(brand_name__iexact='Apple'))
 
         # Budget filter
-        budget_value = normalize_price(intent.get('budget'))
+        budget_value = intent.get('budget')
         if budget_value:
             qs = qs.filter(price__lte=budget_value)
 
         # Feature-based filtering
         feature = intent.get('feature')
         if feature == 'camera':
-            qs = qs.filter(Q(primary_camera_rear__gte=108) | Q(primary_camera_rear__gte=200)).order_by('-avg_rating')
+            qs = qs.filter(Q(primary_camera_rear__gte=108) | Q(primary_camera_front__gte=200)).order_by('-avg_rating')
         elif feature == 'battery':
             qs = qs.filter(Q(battery_capacity__gte=5000) | Q(battery_capacity__gte=6000)).order_by('-avg_rating')
         elif feature == 'compact':
