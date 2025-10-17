@@ -1,0 +1,32 @@
+.input-box {
+    display: flex;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    background-color: white;
+  }
+  
+  .input-box input {
+    flex: 1;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .input-box button {
+    margin-left: 8px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .input-box button:hover {
+    background-color: #0056b3;
+  }
+  
+
+
+  

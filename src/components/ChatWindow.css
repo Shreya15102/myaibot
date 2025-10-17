@@ -1,0 +1,38 @@
+.chat-window {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  
+  .chat-message {
+    margin-bottom: 12px;
+    display: flex;
+  }
+  
+  .chat-message.user {
+    justify-content: flex-end;
+  }
+  
+  .chat-message.ai {
+    justify-content: flex-start;
+  }
+  
+  .message-text {
+    max-width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #e0e0e0;
+  }
+  
+  .chat-message.user .message-text {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+
